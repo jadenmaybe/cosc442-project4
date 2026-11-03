@@ -79,11 +79,12 @@ public class CoffeeMakerTest {
     }
 
     @Test
-    public void testDeleteRecipe_Valid() {
+    void deleteRecipe_Valid() {
         // Arrange
         coffeeMaker.addRecipe(recipe1);
         // Act, assert
         assertTrue(coffeeMaker.deleteRecipe(recipe1));
+        assertNotEquals("recipe1", coffeeMaker.getRecipeForName("recipe1").getName());
     }
 
     @Test
@@ -93,13 +94,18 @@ public class CoffeeMakerTest {
     }
 
     @Test
-    public void testEditRecipe_Valid() {
-        // Arrange
-        coffeeMaker.addRecipe(recipe1);
-        Recipe newRecipe = new Recipe();
-        newRecipe.setName("New");
+    public void testDeleteRecipe_Null() {
         // Act, assert
-        assertTrue(coffeeMaker.editRecipe(recipe1, newRecipe));
+        assertFalse(coffeeMaker.deleteRecipe(null));
+    }
+
+    @Test
+    public void testEditRecipe_Valid() {
+        coffeeMaker.addRecipe(recipe1);
+        recipe2.setName("recipe2");
+
+        assertTrue(coffeeMaker.editRecipe(recipe1, recipe2));
+        assertNotEquals("recipe1", coffeeMaker.getRecipeForName("recipe1").getName());
     }
 
     @Test
@@ -152,16 +158,14 @@ public class CoffeeMakerTest {
     public void testMakeCoffee_Valid() {
         // Arrange
         coffeeMaker.addRecipe(recipe1);
-        coffeeMaker.addInventory(10, 10, 0, 10);
         // Act, assert
-        assertEquals(50, coffeeMaker.makeCoffee(recipe1, 100));
+        assertEquals(0, coffeeMaker.makeCoffee(recipe1, 50));
     }
 
     @Test
     public void testMakeCoffee_InsufficientFunds() {
         // Arrange
         coffeeMaker.addRecipe(recipe1);
-        coffeeMaker.addInventory(10, 10, 0, 10);
         // Act, assert
         assertEquals(5, coffeeMaker.makeCoffee(recipe1, 5));
     }
@@ -169,9 +173,11 @@ public class CoffeeMakerTest {
     @Test
     public void testMakeCoffee_InsufficientIngredients() {
         // Arrange
+        recipe1.setAmtCoffee(100);
         coffeeMaker.addRecipe(recipe1);
-        // Act, assert
-        assertEquals(100, coffeeMaker.makeCoffee(recipe1, 100));
+
+        // Act, assert: cannot be made, so the entire amount is returned
+        assertEquals(50, coffeeMaker.makeCoffee(recipe1, 50));
     }
 
 }

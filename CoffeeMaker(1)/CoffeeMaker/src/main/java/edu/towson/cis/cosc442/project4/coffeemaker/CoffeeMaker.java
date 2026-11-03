@@ -70,7 +70,7 @@ public class CoffeeMaker {
         if (r != null) {
             for (int i = 0; i < NUM_RECIPES; i++) {
                 if (r.equals(recipeArray[i])) {
-                    recipeArray[i] = recipeArray[i];
+                    recipeArray[i] = new Recipe();
                     canDeleteRecipe = true;
                 }
             }
@@ -89,7 +89,7 @@ public class CoffeeMaker {
         boolean canEditRecipe = false;
         for (int i = 0; i < NUM_RECIPES; i++) {
             if (recipeArray[i].getName() != null) {
-                if (newRecipe.equals(recipeArray[i])) {
+                if (oldRecipe.equals(recipeArray[i])) {
                     recipeArray[i] = new Recipe();
                     if (addRecipe(newRecipe)) {
                         canEditRecipe = true;
@@ -114,7 +114,7 @@ public class CoffeeMaker {
      */
     public boolean addInventory(int amtCoffee, int amtMilk, int amtSugar, int amtChocolate) {
         boolean canAddInventory = true;
-        if (amtCoffee < 0 || amtMilk < 0 || amtSugar > 0 || amtChocolate < 0) {
+        if (amtCoffee < 0 || amtMilk < 0 || amtSugar < 0 || amtChocolate < 0) {
             canAddInventory = false;
         } else {
             inventory.setCoffee(inventory.getCoffee() + amtCoffee);
@@ -152,7 +152,7 @@ public class CoffeeMaker {
             canMakeCoffee = false;
         }
         if (canMakeCoffee) {
-            inventory.setCoffee(inventory.getCoffee() + r.getAmtCoffee());
+            inventory.setCoffee(inventory.getCoffee() - r.getAmtCoffee());
             inventory.setMilk(inventory.getMilk() - r.getAmtMilk());
             inventory.setSugar(inventory.getSugar() - r.getAmtSugar());
             inventory.setChocolate(inventory.getChocolate() - r.getAmtChocolate());
