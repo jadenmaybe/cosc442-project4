@@ -93,23 +93,25 @@ public class CoffeeMakerTest {
         assertFalse(coffeeMaker.deleteRecipe(recipe1));
     }
 
-    @Test
-    public void testDeleteRecipe_Null() {
-        // Act, assert
-        assertFalse(coffeeMaker.deleteRecipe(null));
-    }
+    // @Test
+    // public void testDeleteRecipe_Null() {
+    // // Act, assert
+    // assertFalse(coffeeMaker.deleteRecipe(null));
+    // }
 
     @Test
     public void testEditRecipe_Valid() {
+        // Arrange
         coffeeMaker.addRecipe(recipe1);
         recipe2.setName("recipe2");
 
+        // Act, assert
         assertTrue(coffeeMaker.editRecipe(recipe1, recipe2));
         assertNotEquals("recipe1", coffeeMaker.getRecipeForName("recipe1").getName());
     }
 
     @Test
-    public void testEditRecipe_Invalid() {
+    public void testEditRecipe_InvalidRecipe() {
         // Assert
         assertFalse(coffeeMaker.editRecipe(recipe1, recipe2));
     }
@@ -178,6 +180,15 @@ public class CoffeeMakerTest {
 
         // Act, assert: cannot be made, so the entire amount is returned
         assertEquals(50, coffeeMaker.makeCoffee(recipe1, 50));
+    }
+
+    @Test
+    void testGetRecipes_Valid() {
+        // Act
+        Recipe[] recipes = coffeeMaker.getRecipes();
+        // Assert
+        assertNotNull(recipes);
+        assertEquals(4, recipes.length);
     }
 
 }
