@@ -1,8 +1,33 @@
 package edu.towson.cis.cosc442.project4.coffeemaker;
 
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class RecipeTest {
+    private Recipe myRecipe;
+
+    @BeforeEach
+    void setUp() {
+        myRecipe = new Recipe();
+        myRecipe.setName("Recipe1");
+        myRecipe.setAmtChocolate(5);
+        myRecipe.setAmtCoffee(5);
+        myRecipe.setAmtMilk(5);
+        myRecipe.setAmtSugar(5);
+        myRecipe.setPrice(25);
+    }
+
+    @AfterEach
+    void tearDown() {
+        myRecipe = null;
+    }
+
+    // Duplicate recipe checking
     @Test
     void testEquals() {
 
@@ -10,66 +35,112 @@ public class RecipeTest {
 
     @Test
     void testGetAmtChocolate() {
-
+        // Act, assert
+        assertEquals(5, myRecipe.getAmtChocolate());
     }
 
     @Test
     void testGetAmtCoffee() {
-
+        // Act, assert
+        assertEquals(5, myRecipe.getAmtCoffee());
     }
 
     @Test
     void testGetAmtMilk() {
-
+        // Act, assert
+        assertEquals(5, myRecipe.getAmtMilk());
     }
 
     @Test
     void testGetAmtSugar() {
-
+        // Act, assert
+        assertEquals(5, myRecipe.getAmtSugar());
     }
 
     @Test
     void testGetName() {
-
+        // Act, assert
+        assertEquals("Recipe1", myRecipe.getName());
     }
 
     @Test
     void testGetPrice() {
-
+        // Act, assert
+        assertEquals(25, myRecipe.getPrice());
     }
 
-    @Test
-    void testSetAmtChocolate() {
-
+    @ParameterizedTest
+    @CsvSource({ // >= 0, else 0
+            "-1, 0",
+            "0, 0",
+            "1, 1",
+            "5, 5",
+    })
+    void testSetAmtChocolate_Boundary(int num, int expected) {
+        // Arrange
+        myRecipe.setAmtChocolate(num);
+        // Act, assert
+        assertEquals(expected, myRecipe.getAmtChocolate());
     }
 
-    @Test
-    void testSetAmtCoffee() {
-
+    @ParameterizedTest
+    @CsvSource({ // >= 0, else 0
+            "-1, 0",
+            "0, 0",
+            "1, 1",
+            "5, 5",
+    })
+    void testSetAmtCoffee_Boundary(int num, int expected) {
+        // Arrange
+        myRecipe.setAmtCoffee(num);
+        // Act, assert
+        assertEquals(expected, myRecipe.getAmtCoffee());
     }
 
-    @Test
-    void testSetAmtMilk() {
-
+    @ParameterizedTest
+    @CsvSource({ // >= 0, else 0
+            "-1, 0",
+            "0, 0",
+            "1, 1",
+            "5, 5",
+    })
+    void testSetAmtMilk_Boundary(int num, int expected) {
+        // Arrange
+        myRecipe.setAmtMilk(num);
+        // Act, assert
+        assertEquals(expected, myRecipe.getAmtMilk());
     }
 
-    @Test
-    void testSetAmtSugar() {
-
+    @ParameterizedTest
+    @CsvSource({ // >= 0, else 0
+            "-1, 0",
+            "0, 0",
+            "1, 1",
+            "5, 5",
+    })
+    void testSetAmtSugar_Boundary(int num, int expected) {
+        // Arrange
+        myRecipe.setAmtSugar(num);
+        // Act, assert
+        assertEquals(expected, myRecipe.getAmtSugar());
     }
 
-    @Test
-    void testSetName() {
-
-    }
-
-    @Test
-    void testSetPrice() {
-
+    @ParameterizedTest
+    @CsvSource({ // >= 0, else 0
+            "-1, 0",
+            "0, 0",
+            "1, 1",
+            "25, 25",
+    })
+    void testSetPrice_Boundary(int num, int expected) {
+        // Arrange
+        myRecipe.setPrice(num);
+        // Act, assert
+        assertEquals(expected, myRecipe.getPrice());
     }
 
     @Test
     void testToString() {
-
+        assertEquals(myRecipe.getName(), myRecipe.toString());
     }
 }
