@@ -1,6 +1,11 @@
 package edu.towson.cis.cosc442.project4.coffeemaker;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -93,11 +98,11 @@ public class CoffeeMakerTest {
         assertFalse(coffeeMaker.deleteRecipe(recipe1));
     }
 
-    // @Test
-    // public void testDeleteRecipe_Null() {
-    // // Act, assert
-    // assertFalse(coffeeMaker.deleteRecipe(null));
-    // }
+    @Test
+    public void testDeleteRecipe_Null() {
+        // Act, assert
+        assertFalse(coffeeMaker.deleteRecipe(null));
+    }
 
     @Test
     public void testEditRecipe_Valid() {
@@ -120,7 +125,11 @@ public class CoffeeMakerTest {
     // (non-negative values)
     @ParameterizedTest
     @CsvSource({
-            "1, 1, 0, 1, true", // Valid amounts
+            "2, 2, 2, 2, true", // All valid positive
+            "0, 1, 1, 1, true", // Coffee boundary (coffee = 0)
+            "1, 0, 1, 1, true", // Milk boundary (milk = 0)
+            "1, 1, 0, 1, true", // Sugar boundary (sugar = 0)
+            "1, 1, 1, 0, true", // Chocolate boundary (chocolate = 0)
             "-1, 1, 0, 1, false", // Negative coffee boundary
             "1, -1, 0, 1, false", // Negative milk boundary
             "1, 1, -1, 1, false", // Negative sugar boundary
@@ -129,6 +138,18 @@ public class CoffeeMakerTest {
     public void testAddInventory(int coffee, int milk, int sugar, int chocolate, boolean expected) {
         // Act, assert
         assertEquals(expected, coffeeMaker.addInventory(coffee, milk, sugar, chocolate));
+    }
+
+    @Test
+    public void testAddInventory_CorrectIngredientTotal() {
+        // Arrange
+        Inventory inventory = coffeeMaker.checkInventory();
+        // Act, assert
+        assertTrue(coffeeMaker.addInventory(1, 2, 3, 4));
+        assertEquals(16, inventory.getCoffee());
+        assertEquals(17, inventory.getMilk());
+        assertEquals(18, inventory.getSugar());
+        assertEquals(19, inventory.getChocolate());
     }
 
     @Test

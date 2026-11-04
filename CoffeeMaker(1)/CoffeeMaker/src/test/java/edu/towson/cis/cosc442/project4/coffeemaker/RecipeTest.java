@@ -143,4 +143,43 @@ public class RecipeTest {
     void testToString() {
         assertEquals(myRecipe.getName(), myRecipe.toString());
     }
+
+    @Test
+    void testEquals_NullName() {
+        // Arrange
+        Recipe unnamed = new Recipe();
+        // Act, assert
+        assertFalse(unnamed.equals(myRecipe));
+    }
+
+    @Test
+    void testEquals_DifferentNames() {
+        // Arrange
+        Recipe recipe2 = new Recipe();
+        recipe2.setName("Recipe2");
+        // Act, assert
+        assertFalse(myRecipe.equals(recipe2));
+    }
+
+    @Test
+    void testEquals_SameNames() {
+        // Arrange
+        Recipe recipe2 = new Recipe();
+        recipe2.setName("Recipe1");
+        // Act, assert
+        assertTrue(myRecipe.equals(recipe2));
+    }
+
+    @Test
+    void testEquals_OtherNameNull() {
+        // Arrange, act, assert
+        assertFalse(myRecipe.equals(new Recipe()));
+    }
+
+    @Test
+    void testEquals_BothNamesNull() {
+        // Arrange, act, assert
+        assertFalse(new Recipe().equals(new Recipe()));
+    }
+
 }

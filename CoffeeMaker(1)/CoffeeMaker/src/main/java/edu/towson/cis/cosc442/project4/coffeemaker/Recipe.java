@@ -24,11 +24,7 @@ public class Recipe {
      * @param amtChocolate The amount of chocolate to set.
      */
     public void setAmtChocolate(int amtChocolate) {
-        if (amtChocolate >= 0) {
-            this.amtChocolate = amtChocolate;
-        } else {
-            this.amtChocolate = 0;
-        }
+        this.amtChocolate = Math.max(0, amtChocolate);
     }
 
     /**
