@@ -171,7 +171,7 @@ public class RecipeTest {
     }
 
     @Test
-    void testEquals_OtherNameNull() {
+    void testEquals_ValidEqualsNull() {
         // Arrange, act, assert
         assertFalse(myRecipe.equals(new Recipe()));
     }
